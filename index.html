@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>深大百宝箱 - SZU Toolbox Ultimate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <!-- 主入口菜单 (Hub) -->
+    <div id="mainHub" class="hub-container">
+        <header>
+            <h1 class="logo">深大百宝箱</h1>
+            <p class="tagline">解压、提神、不挂科 · 8合1终极版</p>
+        </header>
+        
+        <div class="game-cards-scroll">
+            <div class="game-cards">
+                <div class="game-card" onclick="switchGame('tetris')">
+                    <div class="card-icon">🧊</div>
+                    <h3>俄罗斯方块</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('2048')">
+                    <div class="card-icon">💓</div>
+                    <h3>心跳 2048</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('jump')">
+                    <div class="card-icon">🍒</div>
+                    <h3>荔枝跳跳</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('snake')">
+                    <div class="card-icon">🐍</div>
+                    <h3>GPA 蛇</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('color')">
+                    <div class="card-icon">🎨</div>
+                    <h3>眼力深大</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('stack')">
+                    <div class="card-icon">🏗️</div>
+                    <h3>文山叠叠乐</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('bus')">
+                    <div class="card-icon">🚌</div>
+                    <h3>校巴大冒险</h3>
+                </div>
+                <div class="game-card" onclick="switchGame('match')">
+                    <div class="card-icon">🍱</div>
+                    <h3>美食消消乐</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="szu-footer-logo">
+            <svg viewBox="0 0 100 100" class="szu-svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#9D1D22" stroke-width="2"/>
+                <text x="50" y="45" font-family="serif" font-size="12" text-anchor="middle" fill="#9D1D22" font-weight="bold">SHENZHEN</text>
+                <text x="50" y="58" font-family="serif" font-size="10" text-anchor="middle" fill="#9D1D22">UNIVERSITY</text>
+            </svg>
+            <p>深圳大学 · 官方非正式出品</p>
+        </div>
+    </div>
+
+    <!-- 游戏容器 -->
+    <div id="tetrisContainer" class="game-wrapper hidden"><button class="back-btn" onclick="goBack()">返回</button><div class="game-layout"><canvas id="gameBoard"></canvas></div><div id="tetrisOverlay" class="overlay"><div class="screen"><h2>俄罗斯方块</h2><button id="tetrisStartBtn" class="primary-btn">开始</button></div></div><div class="mobile-controls"><div class="ctrl-row"><button class="ctrl-btn" id="btn-rot">旋</button></div><div class="ctrl-row"><button class="ctrl-btn" id="btn-left">←</button><button class="ctrl-btn" id="btn-down">↓</button><button class="ctrl-btn" id="btn-right">→</button></div></div></div>
+    
+    <div id="two048Container" class="game-wrapper hidden"><button class="back-btn" onclick="goBack()">返回</button><div class="game-layout"><div id="timerBar" class="timer-bar"></div><div id="grid-2048" class="grid-2048"></div></div><div id="two048Overlay" class="overlay"><div class="screen"><h2>心跳 2048</h2><button id="two048StartBtn" class="primary-btn">开始</button></div></div></div>
+    
+    <div id="jumpContainer" class="game-wrapper hidden"><button class="back-btn" onclick="goBack()">返回</button><div class="game-layout"><canvas id="jumpBoard"></canvas></div><div id="jumpOverlay" class="overlay"><div class="screen"><h2>荔枝跳跳</h2><button id="jumpStartBtn" class="primary-btn">开始</button></div></div></div>
+    
+    <div id="snakeContainer" class="game-wrapper hidden"><button class="back-btn" onclick="goBack()">返回</button><div class="game-layout"><canvas id="snakeBoard"></canvas></div><div id="snakeOverlay" class="overlay"><div class="screen"><h2>GPA 蛇</h2><button id="snakeStartBtn" class="primary-btn">开始</button></div></div></div>
+    
+    <div id="colorContainer" class="game-wrapper hidden"><button class="back-btn" onclick="goBack()">返回</button><div id="colorGrid" class="color-grid"></div><div id="colorOverlay" class="overlay"><div class="screen"><h2>眼力深大</h2><button id="colorStartBtn" class="primary-btn">开始</button></div></div></div>
+
+    <!-- 新增 3 个游戏 -->
+    <div id="stackContainer" class="game-wrapper hidden">
+        <button class="back-btn" onclick="goBack()">返回</button>
+        <div class="game-layout"><canvas id="stackBoard"></canvas></div>
+        <div class="stack-score">层数: <span id="stackScore">0</span></div>
+        <div id="stackOverlay" class="overlay"><div class="screen"><h2>文山叠叠乐</h2><p>对准了再点！</p><button id="stackStartBtn" class="primary-btn">开始叠楼</button></div></div>
+    </div>
+
+    <div id="busContainer" class="game-wrapper hidden">
+        <button class="back-btn" onclick="goBack()">返回</button>
+        <div class="game-layout"><canvas id="busBoard"></canvas></div>
+        <div class="bus-score">路程: <span id="busScore">0</span>m</div>
+        <div id="busOverlay" class="overlay"><div class="screen"><h2>校巴大冒险</h2><p>左右滑动躲避障碍</p><button id="busStartBtn" class="primary-btn">发车</button></div></div>
+    </div>
+
+    <div id="matchContainer" class="game-wrapper hidden">
+        <button class="back-btn" onclick="goBack()">返回</button>
+        <div class="match-score">得分: <span id="matchScore">0</span></div>
+        <div id="matchGrid" class="match-grid"></div>
+        <div id="matchOverlay" class="overlay"><div class="screen"><h2>美食消消乐</h2><p>三个连在一起消除</p><button id="matchStartBtn" class="primary-btn">开饭</button></div></div>
+    </div>
+
+    <script src="script-tetris.js"></script>
+    <script src="script-2048.js"></script>
+    <script src="script-jump.js"></script>
+    <script src="script-snake.js"></script>
+    <script src="script-color.js"></script>
+    <script src="script-stack.js"></script>
+    <script src="script-bus.js"></script>
+    <script src="script-match.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
